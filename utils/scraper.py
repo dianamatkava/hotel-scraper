@@ -149,7 +149,24 @@ class BookingScraper(AbstractScraper):
             self.hotel.rooms = None
             return ScraperException(404, 'Rooms Not Found'), self.hotel
         
-        
+    def get_other_hotel(self):
+        other_hotel_conf = booking_conf['alternative_hotels']
+        other_hotel_block = self.body.find_all(
+            class_=other_hotel_conf['block']
+        )
+        if other_hotel_block:
+            hotel_list = other_hotel_block[0].find_all(class_=other_hotel_conf['list'])
+            if hotel_list:
+                for hotel in hotel_list:
+                    hotel_el = hotel.find_all(class_=other_hotel_conf['title'])
+                    if not hotel_el or hotel_el[0].get_text() == '':
+                        hotel_el = [ScraperValueException('Other Hotel')]
+                    self.hotel.add_other_hotel(hotel_el[0].get_text())
+                    
+            return ScraperException(200, 'OK'), self.hotel
+        else:
+            self.hotel.other_hotel = []
+            return ScraperException(404, 'Other Hotel Not Found'), self.hotel
         
     # TODO: make calling functions dynamic
     def __call__(self):
@@ -160,6 +177,7 @@ class BookingScraper(AbstractScraper):
         status, hotel = self.get_rating()
         status, hotel = self.get_review_info()
         status, hotel = self.get_rooms()
+        status, hotel = self.get_other_hotel()
         
         return status, hotel
     

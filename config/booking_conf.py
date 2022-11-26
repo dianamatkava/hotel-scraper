@@ -34,5 +34,10 @@ booking_conf = {
         # first element is header
         'start_from': 1
         
+    },
+    'alternative_hotels': {
+        'block': 'bui-banner',
+        'list': 'bui-card__content',
+        'title': 'bui-card__title'
     }
 }

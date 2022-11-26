@@ -67,6 +67,7 @@ class Hotel:
     raiting:        HotelRating 
     review:         HotelReview
     rooms:          HotelRoomComposition
+    other_hotel:    List[str]#List[Hotel]
     
     def __init__(
         self, name, address, description,
@@ -74,6 +75,11 @@ class Hotel:
         self.name = name.replace('\n', '')
         self.address = address.replace('\n', '')
         self.description = description.replace('\n\n', '\n').replace('\n\n', '\n')
+        self.other_hotel = []
+        
+     # bulk create
+    def add_other_hotel(self, hotel: str) -> None:
+        self.other_hotel.append(hotel)
         
     def __str__(self) -> str:
         return self.name

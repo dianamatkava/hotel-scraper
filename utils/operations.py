@@ -9,18 +9,23 @@ from utils.scraper import AbstractScraper
 
 class HotelPage:
     domain:     str
-    param:      str
-    url:        str
+    param:      str | None
+    url:        str | None
+    path:       str | None
     
     content:    BeautifulSoup
     scraper:    AbstractScraper
     
-    def __init__(self, domain, param) -> None:
-        self.domain = domain
-        self.param = param
-        self.url = 'https://' + self.domain + \
-            scraper_conf[self.domain]['address_to_hotels'] + param
-        self.scraper = scraper_conf[self.domain]['scraper']
+    def __init__(
+        self, domain:str=None, url:str=None, path:str=None
+    ) -> None:
+        if path:
+            self.path = path
+            self.scraper = scraper_conf[scraper_conf['default']]['scraper']
+        elif url:
+            self.domain = scraper_conf['default']
+            self.url = url
+            self.scraper = scraper_conf[self.domain]['scraper']
         
     def connect_(self) -> BeautifulSoup | Exception:
         try:
@@ -38,6 +43,14 @@ class HotelPage:
                     res.status_code, responses[res.status_code]
                 )
     
+    def connect_to_file(self) -> BeautifulSoup | Exception:
+        with open(self.path, encoding="utf8") as file:
+            self.content = BeautifulSoup(file, 'lxml')
+            if self.content:
+                self.content.status_code = 200
+                return self.content
+        return ScraperException(404, "File or Content not found")
+        
     def parse_data(self) -> Hotel | ScraperException:
         scraper = self.scraper(self.content)()
         return scraper
