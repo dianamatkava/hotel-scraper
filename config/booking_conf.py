@@ -39,5 +39,10 @@ booking_conf = {
         'block': 'bui-banner',
         'list': 'bui-card__content',
         'title': 'bui-card__title'
+    },
+    
+    'test': {
+        'url': 'https://www.booking.com/hotel/de/melia-berlin.en-gb.html',
+        'test_hotel_name': 'Meliá Berlin'
     }
 }

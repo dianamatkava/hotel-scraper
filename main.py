@@ -1,5 +1,6 @@
 import os
 import json
+import unittest
 import requests
 import validators 
 from time import sleep
@@ -109,6 +110,7 @@ if __name__ == '__main__':
     hotel_path_ex = 'test_input\Meliá Berlin, Berlin – Updated 2022 Prices.html'
     
     tprint(f'Hotel Scraper CLI', font='bulbhead')
+    
     print(f'''{bcolors.OKCYAN}Input Examples:\n\nHotel Name: {hotel_name_ex}\nHotel Link: {hotel_link_ex}\nHotel Path: {hotel_path_ex}\n\n\nFor now parsing only booking.com{bcolors.ENDC}''')
 
     # Hendle user input
@@ -133,5 +135,5 @@ if __name__ == '__main__':
     
     
     print(main(input_type, user_input))
-        
+
 
