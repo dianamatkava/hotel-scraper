@@ -1,9 +1,9 @@
 from abc import ABC, abstractclassmethod
 from models import *
-from exception import *
+from utils.exception import *
 from bs4 import BeautifulSoup
 from bs4.element import Tag
-from booking_conf import booking_conf
+from config.booking_conf import booking_conf
 
 class AbstractScraper(ABC):
     
@@ -32,7 +32,7 @@ class BookingScraper(AbstractScraper):
     
     def __init__(self, content: BeautifulSoup):
         try:
-            self.body = content         #.find(id='bodyconstraint')
+            self.body = content.find(id='bodyconstraint')
             self.scraper_status = ScraperException(200, 'OK')
         except Exception as _ex:
             print(_ex)
@@ -57,7 +57,7 @@ class BookingScraper(AbstractScraper):
         hotel = Hotel(
             name=hotel_name[0].get_text(),
             address=hotel_address[0].get_text(),
-            description=hotel_description[0].get_text().replace('\n\n', '\n').replace('\n\n', '\n')
+            description=hotel_description[0].get_text()
         )
         self.hotel = hotel
         return hotel
@@ -122,8 +122,34 @@ class BookingScraper(AbstractScraper):
             return ScraperException(404, 'Review Not Found'), self.hotel
         
     def get_rooms(self) -> HotelRoomComposition:
-        description_block = ''
-        ''' Get description'''
+        room_conf = booking_conf['room']
+        room_block = self.body.find_all(
+            class_=room_conf['room_block']
+        )
+        if room_block:
+            rooms_list = list()
+            rooms = room_block[0].find_all(class_=room_conf['room_element'])
+            if rooms:
+                for room in rooms[room_conf['start_from']:]:
+                    room_type = room.find_all(class_=room_conf['room_type'])
+                    
+                    if not room_type:
+                        room_type = [ScraperValueException('Room Type')]
+                        
+                    room_obj = HotelRoom(
+                        r_type=room_type[0].get_text()
+                    )
+                    rooms_list.append(room_obj)
+                
+                rooms = HotelRoomComposition()
+                rooms.extend(rooms_list)
+            self.hotel.rooms = rooms
+            return ScraperException(200, 'OK'), self.hotel
+        else:
+            self.hotel.rooms = None
+            return ScraperException(404, 'Rooms Not Found'), self.hotel
+        
+        
         
     # TODO: make calling functions dynamic
     def __call__(self):
@@ -133,5 +159,7 @@ class BookingScraper(AbstractScraper):
         hotel = self.get_general_info()
         status, hotel = self.get_rating()
         status, hotel = self.get_review_info()
+        status, hotel = self.get_rooms()
         
         return status, hotel
+    

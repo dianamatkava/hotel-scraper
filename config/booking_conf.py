@@ -1,4 +1,5 @@
 booking_conf = {
+    'body': 'bodyconstraint',
     'hotel_name': 'pp-header__title',
     'hotel_address': 'hp_address_subtitle',
     'description': 'k2-hp--description',
@@ -17,13 +18,21 @@ booking_conf = {
             }
         },
     },
+    
     'review': {
         'review_block': 'cbb2d85c33',
         'review_score': 'd10a6220b4',
         'count_reviews': 'c90c0a70d3',
         'review_name': 'e46e88563a'
     },
+    
     'room': {
-        'room_block': 'roomstable'
+        'room_block': 'roomstable',
+        'room_element': 'c135d5bf2d',
+        'room_type': 'a168c6f285',
+        'room_description': 'c58eea6bdb',
+        # first element is header
+        'start_from': 1
+        
     }
 }

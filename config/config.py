@@ -1,4 +1,4 @@
-from operations import BookingScraper    
+from utils.scraper import BookingScraper    
 
 
 scraper_conf = {

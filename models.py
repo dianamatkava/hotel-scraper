@@ -1,13 +1,13 @@
 from typing import List
 
 class HotelRoom:
-    room_catigory: str
+    r_type:         str
     
-    def __init__(self, room_catigories) -> None:
-        self.room_catigories = room_catigories
+    def __init__(self, r_type) -> None:
+        self.r_type = r_type
         
     def __str__(self) -> str:
-        return self.room_catigories
+        return self.r_type
     
     
 class HotelRoomComposition:
@@ -18,11 +18,17 @@ class HotelRoomComposition:
     
     def add(self, component: HotelRoom) -> None:
         self.rooms.append(component)
+        
+    # bulk create
+    def extend(self, component: HotelRoom) -> None:
+        self.rooms.extend(component)
 
     def remove(self, component: HotelRoom) -> None:
         self.rooms.remove(component)
         component = None
-        
+    
+    def __repr__(self) -> str:
+        return f'{[room.r_type for room in self.rooms]}'
         
         
 class HotelRating:
@@ -35,7 +41,6 @@ class HotelRating:
         
     def __str__(self) -> str:
         return f"{self.classification} {self.raiting}"
-    
     
         
 class HotelReview:
@@ -66,9 +71,9 @@ class Hotel:
     def __init__(
         self, name, address, description,
     ) -> None:
-        self.name = name
-        self.address = address
-        self.description = description
+        self.name = name.replace('\n', '')
+        self.address = address.replace('\n', '')
+        self.description = description.replace('\n\n', '\n').replace('\n\n', '\n')
         
     def __str__(self) -> str:
         return self.name

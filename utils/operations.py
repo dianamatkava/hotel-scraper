@@ -1,19 +1,11 @@
 import requests
 from http.client import responses
-from abc import ABC, abstractclassmethod
 from bs4 import BeautifulSoup
-from bs4.element import Tag
-from config import (
-    scraper_conf
-)
-from models import (
-    Hotel, HotelRating, HotelReview, 
-    HotelRoom, HotelRoomComposition
-)
-from exception import (
-    ScraperException, ScraperValueException
-)
-from operations import AbstractScraper
+from models import Hotel
+from config.config import scraper_conf
+from utils.exception import ScraperException
+from utils.scraper import AbstractScraper
+
 
 class HotelPage:
     domain:     str
@@ -22,7 +14,6 @@ class HotelPage:
     
     content:    BeautifulSoup
     scraper:    AbstractScraper
-    
     
     def __init__(self, domain, param) -> None:
         self.domain = domain
@@ -53,35 +44,3 @@ class HotelPage:
         
     def __str__(self) -> str:
         return f'{self.url}'
-
-        
-
-        
-# do search, choise resourse
-# HotelPage(resourse+search_input)
-# validate and give examples
-# Define HotelPage scraper
-# 
-                
-def test():
-    url = 'https://www.booking.com/hotel/de/kempinskibristolberlin.en-gb.html'  # check connection
-    url2 = 'https://www.booking.com/hotel/de/melia-berlin.en-gb.html'
-    url3 = 'https://www.booking.com/hotel/de/precise-tale-berlin.en-gb.html'
-    
-    hotel_page_obj = HotelPage('www.booking.com', 'precise-tale-berlin.en-gb.html')
-    hotel_html = hotel_page_obj.connect_()
-    if hotel_html.status_code == 200:
-        status, hotel = hotel_page_obj.parse_data()
-        print(status.status_code)
-        print(hotel.name, hotel.address,
-              hotel.raiting.raiting, hotel.raiting.classification, 
-               hotel.review.review_count, hotel.review.review_point, hotel.review.review_name, sep='\n')
-    
-test()
-
-
-
-
-
-
-
