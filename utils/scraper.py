@@ -63,16 +63,16 @@ class BookingScraper(AbstractScraper):
         return hotel
         
     def get_rating(self) -> HotelRating:
-        raiting_block = self.body.find_all(
+        rating_block = self.body.find_all(
             class_=booking_conf['rating']['block']
         )
-        if raiting_block:
-            raiting = raiting_block[0]
+        if rating_block:
+            rating = rating_block[0]
             point_type = booking_conf['rating']['point_type']
             
-            raiting_score = len(raiting.find_all(class_=booking_conf['rating']['points']))    
+            rating_score = len(rating.find_all(class_=booking_conf['rating']['points']))    
         
-            classification_class = raiting.find_all(
+            classification_class = rating.find_all(
                 class_=point_type['class'])
             
             if not classification_class:
@@ -80,15 +80,15 @@ class BookingScraper(AbstractScraper):
             else:
                 classification_name = point_type['types'][classification_class[0][point_type['identificator']]]
             
-            hotel_raiting = HotelRating(
+            hotel_rating = HotelRating(
                 classification=classification_name,
-                raiting=int(raiting_score)
+                rating=int(rating_score)
             )
-            self.hotel.raiting = hotel_raiting
+            self.hotel.rating = hotel_rating
             return ScraperException(200, 'OK'), self.hotel
         else:
-            self.hotel.raiting = None
-            return ScraperException(404, 'Raiting Not Found'), self.hotel
+            self.hotel.rating = None
+            return ScraperException(404, 'Rating Not Found'), self.hotel
         
         
     def get_review_info(self) -> HotelReview:

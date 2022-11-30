@@ -33,14 +33,14 @@ class HotelRoomComposition:
         
 class HotelRating:
     classification: str
-    raiting:        int | str
+    rating:        int | str
     
-    def __init__(self, classification, raiting) -> None:
+    def __init__(self, classification, rating) -> None:
         self.classification = classification
-        self.raiting = raiting
+        self.rating = rating
         
     def __str__(self) -> str:
-        return f"{self.classification} {self.raiting}"
+        return f"{self.classification} {self.rating}"
     
         
 class HotelReview:
@@ -64,7 +64,7 @@ class Hotel:
     address:        str
     description:    str
     
-    raiting:        HotelRating 
+    rating:        HotelRating 
     review:         HotelReview
     rooms:          HotelRoomComposition
     other_hotel:    List[str]#List[Hotel]

@@ -55,7 +55,7 @@ d = {
     'rating': {
         'max_rating_points': 5,
         'rating_groups' 'fbb11b26f5 e23c0b1d74'
-        'empty_raiting_point': 'b6dc9a9e69 d54be8037c fe621d6382 f86806591e',
+        'empty_rating_point': 'b6dc9a9e69 d54be8037c fe621d6382 f86806591e',
         
         
         'point_type': {

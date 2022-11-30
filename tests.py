@@ -70,20 +70,20 @@ class BookingScraperTest(unittest.TestCase):
         self.assertTrue(bool(description))
     
     # Rating block exist
-    def test_raiting(self):
+    def test_rating(self):
         try:
-            raiting_block = self.body.select_one(f".{booking_conf['rating']['block']}")
+            rating_block = self.body.select_one(f".{booking_conf['rating']['block']}")
         except:
-            raiting_block = None
-        self.assertTrue(bool(raiting_block))
+            rating_block = None
+        self.assertTrue(bool(rating_block))
     
     # Rating points should not more the max-point
-    def test_raiting_max_points(self):
+    def test_rating_max_points(self):
         try:
-            raiting_points = self.body.select_one(f".{booking_conf['rating']['block']}")
+            rating_points = self.body.select_one(f".{booking_conf['rating']['block']}")
         except:
-            raiting_points = None
-        self.assertTrue(len(raiting_points) <= booking_conf['rating']['max_rating_points'])
+            rating_points = None
+        self.assertTrue(len(rating_points) <= booking_conf['rating']['max_rating_points'])
             
     # TODO: and so on ... 
     # Review testing the same way as general info

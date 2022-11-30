@@ -84,8 +84,8 @@ def main(input_type:str, user_input: str):
             'description': hotel.description,
             
             'rating': {
-                'classification': hotel.raiting.classification,
-                'raiting': hotel.raiting.raiting,
+                'classification': hotel.rating.classification,
+                'rating': hotel.rating.rating,
             },
             
             'review': {
@@ -105,7 +105,7 @@ def main(input_type:str, user_input: str):
 
 if __name__ == '__main__': 
     hotel_name = 'Meliá Berlin'
-    hotel_name_ex = hotel_name+' (search for other hotel currently not avialable)'
+    hotel_name_ex = hotel_name+' (search for other hotel currently not available)'
     hotel_link_ex = 'https://www.booking.com/hotel/de/melia-berlin.en-gb.html'
     hotel_path_ex = 'test_input\Meliá Berlin, Berlin – Updated 2022 Prices.html'
     
@@ -113,7 +113,7 @@ if __name__ == '__main__':
     
     print(f'''{bcolors.OKCYAN}Input Examples:\n\nHotel Name: {hotel_name_ex}\nHotel Link: {hotel_link_ex}\nHotel Path: {hotel_path_ex}\n\n\nFor now parsing only booking.com{bcolors.ENDC}''')
 
-    # Hendle user input
+    # Handle user input
     validate_status = False
     input_type = None
     user_input = input('Enter Hotel name, url or path to html file: ')
