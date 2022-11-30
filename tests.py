@@ -15,7 +15,7 @@ class BookingScraperTest(unittest.TestCase):
     soup: BeautifulSoup
     body: Tag
 
-    # Existin hotel is avialabel 
+    # Existing hotel is available
     def test_connect(self):
         try:
             res = requests.get(url=self.conf['url'])
@@ -69,7 +69,7 @@ class BookingScraperTest(unittest.TestCase):
             description = None
         self.assertTrue(bool(description))
     
-    # Raiting block exist
+    # Rating block exist
     def test_raiting(self):
         try:
             raiting_block = self.body.select_one(f".{booking_conf['rating']['block']}")
@@ -77,7 +77,7 @@ class BookingScraperTest(unittest.TestCase):
             raiting_block = None
         self.assertTrue(bool(raiting_block))
     
-    # Raiting points shoud not more the max-point
+    # Rating points should not more the max-point
     def test_raiting_max_points(self):
         try:
             raiting_points = self.body.select_one(f".{booking_conf['rating']['block']}")
